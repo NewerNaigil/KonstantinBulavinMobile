@@ -34,7 +34,7 @@ public class BaseTest implements IDriver {
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
         System.out.println("After");
-        appiumDriver.closeApp();
+        //appiumDriver.closeApp();
     }
 
     private void setAppiumDriver(String platformName, String deviceName, String browserName, String app){
