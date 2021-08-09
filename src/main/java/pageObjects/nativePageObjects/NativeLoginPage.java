@@ -19,19 +19,18 @@ public class NativeLoginPage extends NativeAbstractPage {
 
     public NativeLoginPage(AppiumDriver appiumDriver) {
         this.appiumDriver = appiumDriver;
-        PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
     }
 
-    public void login(String email, String password) {
+    public NativeBudgetActivityPage login(String email, String password) {
         loginEmailTextField.sendKeys(email);
         passwordField.sendKeys(password);
         singInButton.click();
+        return new NativeBudgetActivityPage(appiumDriver);
     }
-
 
     public NativeRegisterPage clickRegisterButton() {
         registerButton.click();
         return new NativeRegisterPage(appiumDriver);
     }
-
 }

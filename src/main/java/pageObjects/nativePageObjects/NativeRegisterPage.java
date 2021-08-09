@@ -23,18 +23,15 @@ public class NativeRegisterPage extends NativeAbstractPage {
 
     public NativeRegisterPage(AppiumDriver appiumDriver) {
         this.appiumDriver = appiumDriver;
-        PageFactory.initElements( new AppiumFieldDecorator(appiumDriver), this);
+        PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
     }
 
-    public NativeLoginPage registerButtonClick() {
-        registerNewAccountButton.click();
-        return new NativeLoginPage(appiumDriver);
-    }
-
-    public void registerNewUser(String email, String login, String password) {
+    public NativeLoginPage registerNewUser(String email, String login, String password) {
         emailField.sendKeys(email);
         userNameField.sendKeys(login);
         passwordField.sendKeys(password);
+        confirmPasswordField.sendKeys(password);
         registerNewAccountButton.click();
+        return new NativeLoginPage(appiumDriver);
     }
 }
