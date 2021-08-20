@@ -1,8 +1,7 @@
 package scenarios;
 
-import static org.openqa.selenium.Keys.ENTER;
-
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -22,8 +21,9 @@ public class webMobileTests extends BaseTest {
         WebPageObject webPageObject = (WebPageObject) getPo().getPageObject();
 
         webPageObject.searchRequest(configReader.getRequestData());
-        getDriver().getKeyboard().pressKey(ENTER);
 
-        Assert.assertTrue(webPageObject.getSearchList().size() > 0);
+        for (WebElement x : webPageObject.getSearchList()) {
+            Assert.assertTrue(x.getText().contains(configReader.getRequestData()));
+        }
     }
 }

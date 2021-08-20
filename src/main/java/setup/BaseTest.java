@@ -16,7 +16,9 @@ public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
     private static IPageObject po;
-    protected static ConfigReader configReader;
+    protected static ConfigReader configReader = new ConfigReader();
+
+    private static String token = configReader.getToken().replaceAll("/", "%2f");
 
     @Override
     public AppiumDriver getDriver() {
@@ -27,14 +29,21 @@ public class BaseTest implements IDriver {
         return po;
     }
 
-    @Parameters({"platformName", "appType", "deviceName", "browserName", "app"})
+    @Parameters({"platformName", "appType", "deviceName", "udid", "browserName", "app", "appPackage", "appActivity",
+        "bundleId"})
     @BeforeSuite(alwaysRun = true)
-    public void setUp(String platformName, String appType, String deviceName, @Optional("") String browserName,
-                      @Optional("") String app) throws Exception {
+    public void setUp(String platformName,
+                      String appType,
+                      @Optional("") String deviceName,
+                      @Optional("") String udid,
+                      @Optional("") String browserName,
+                      @Optional("") String app,
+                      @Optional("") String appPackage,
+                      @Optional("") String appActivity,
+                      @Optional("") String bundleId) throws Exception {
         System.out.println("Before: app type - " + appType);
-        setAppiumDriver(platformName, deviceName, browserName, app);
+        setAppiumDriver(platformName, deviceName, udid, browserName, app, appPackage, appActivity, bundleId);
         setPageObject(appType, appiumDriver);
-        configReader = new ConfigReader();
     }
 
     @AfterSuite(alwaysRun = true)
@@ -43,11 +52,19 @@ public class BaseTest implements IDriver {
         appiumDriver.closeApp();
     }
 
-    private void setAppiumDriver(String platformName, String deviceName, String browserName, String app) {
+    private void setAppiumDriver(String platformName,
+                                 String deviceName,
+                                 String udid,
+                                 String browserName,
+                                 String app,
+                                 String appPackage,
+                                 String appActivity,
+                                 String bundleId) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         //mandatory Android capabilities
         capabilities.setCapability("platformName", platformName);
         capabilities.setCapability("deviceName", deviceName);
+        capabilities.setCapability("udid", udid);
 
         if (app.endsWith(".apk")) {
             capabilities.setCapability("app", (new File(app)).getAbsolutePath());
@@ -56,8 +73,18 @@ public class BaseTest implements IDriver {
         capabilities.setCapability("browserName", browserName);
         capabilities.setCapability("chromedriverDisableBuildCheck", "true");
 
+        // Capabilities for test of Android native app on EPAM Mobile Cloud
+        capabilities.setCapability("appPackage", appPackage);
+        capabilities.setCapability("appActivity", appActivity);
+
+        // Capabilities for test of iOS native app on EPAM Mobile Cloud
+        capabilities.setCapability("bundleId", bundleId);
+        //if(platformName.equals("iOS")) capabilities.setCapability("automationName","XCUITest");
+
         try {
-            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), capabilities);
+            //appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), capabilities);
+            appiumDriver =
+                new AppiumDriver(new URL("https://EPM-TSTF:" + token + "@mobilecloud.epam.com/wd/hub"), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -43,4 +43,8 @@ public class ConfigReader {
     public String getRequestData() {
         return properties.getProperty("searchRequest");
     }
+
+    public String getToken() {
+        return properties.getProperty("token");
+    }
 }
