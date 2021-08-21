@@ -16,7 +16,7 @@ public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
     private static IPageObject po;
-    protected static ConfigReader configReader;
+    public static ConfigReader configReader;
 
     @Override
     public AppiumDriver getDriver() {
