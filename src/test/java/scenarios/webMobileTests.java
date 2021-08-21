@@ -1,5 +1,8 @@
 package scenarios;
 
+import java.util.Locale;
+import org.openqa.selenium.Keys;
+import setup.dataproviders.TestDataProvider;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,8 +13,8 @@ import setup.BaseTest;
 
 public class webMobileTests extends BaseTest {
 
-    @Test(groups = {"web"}, description = "This test check web search on Google")
-    public void googleWebTest() {
+    @Test(groups = {"web"}, dataProvider = "searchDataProvider", dataProviderClass = TestDataProvider.class, description = "This test check web search on Google")
+    public void googleWebTest(String requestData) {
         getDriver().get("https://www.google.com/");
 
         new WebDriverWait(getDriver(), 10).until(
@@ -20,10 +23,10 @@ public class webMobileTests extends BaseTest {
 
         WebPageObject webPageObject = (WebPageObject) getPo().getPageObject();
 
-        webPageObject.searchRequest(configReader.getRequestData());
+        webPageObject.searchRequest(requestData);
 
         for (WebElement x : webPageObject.getSearchList()) {
-            Assert.assertTrue(x.getText().contains(configReader.getRequestData()));
+            Assert.assertTrue(x.getText().toUpperCase(Locale.ROOT).contains(requestData));
         }
     }
 }

@@ -16,9 +16,11 @@ public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
     private static IPageObject po;
-    protected static ConfigReader configReader = new ConfigReader();
+    public static ConfigReader configReader = new ConfigReader();
 
     private static String token = configReader.getToken().replaceAll("/", "%2f");
+
+    public static String typeOS;
 
     @Override
     public AppiumDriver getDriver() {
@@ -44,6 +46,7 @@ public class BaseTest implements IDriver {
         System.out.println("Before: app type - " + appType);
         setAppiumDriver(platformName, deviceName, udid, browserName, app, appPackage, appActivity, bundleId);
         setPageObject(appType, appiumDriver);
+        typeOS = platformName;
     }
 
     @AfterSuite(alwaysRun = true)

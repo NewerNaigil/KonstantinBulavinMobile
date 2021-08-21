@@ -1,5 +1,7 @@
 package scenarios;
 
+import org.testng.asserts.SoftAssert;
+import setup.dataproviders.TestDataProvider;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
@@ -9,22 +11,26 @@ import setup.BaseTest;
 
 public class nativeMobileTests extends BaseTest {
 
-    @Test(groups = {"native"}, description = "This test check EPAM Test App")
+    @Test(groups = {"native"}, dataProvider = "userDataProvider", dataProviderClass = TestDataProvider.class, description = "This test check EPAM Test App")
     @Parameters({"expectedTitle"})
-    public void registerTest(String expectedTitle) {
+    public void registerTest(String expectedTitle, String email, String userName, String password) {
 
         NativeLoginPage nativeLoginPage = (NativeLoginPage) getPo().getPageObject();
 
         WebElement header = nativeLoginPage.clickRegisterButton()
                                            .registerNewUser(
-                                               configReader.getEmail(),
-                                               configReader.getUserName(),
-                                               configReader.getPassword())
+                                               email,
+                                               userName,
+                                               password)
                                            .login(
-                                               configReader.getEmail(),
-                                               configReader.getPassword())
+                                               email,
+                                               password)
                                            .getHeaderText();
 
-        Assert.assertEquals(header.getText(), expectedTitle);
+        //Assert.assertEquals(header.getText(), expectedTitle);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(header.getText(), expectedTitle);
+
+        softAssert.assertAll();
     }
 }

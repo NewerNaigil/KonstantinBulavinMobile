@@ -22,7 +22,7 @@ public class NativeRegisterPage extends NativeAbstractPage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Repeat please']")
     WebElement confirmPasswordField;
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Register new account']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@value='Register new account']")
     WebElement registerNewAccountButton;
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_cancel_button")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@label='cancel']")
