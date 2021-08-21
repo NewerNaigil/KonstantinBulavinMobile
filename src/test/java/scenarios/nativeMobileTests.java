@@ -27,10 +27,6 @@ public class nativeMobileTests extends BaseTest {
                                                password)
                                            .getHeaderText();
 
-        //Assert.assertEquals(header.getText(), expectedTitle);
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(header.getText(), expectedTitle);
-
-        softAssert.assertAll();
+        Assert.assertEquals(header.getText(), expectedTitle);
     }
 }
