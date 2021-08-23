@@ -1,27 +1,32 @@
 package scenarios;
 
+import java.util.Locale;
+import org.openqa.selenium.Keys;
+import setup.dataproviders.TestDataProvider;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pageObjects.webPageObjects.WebPageObject;
 import setup.BaseTest;
 
 public class webMobileTests extends BaseTest {
 
-    @Test(groups = {"web"}, description = "Make sure that we've opened IANA homepage")
-    public void simpleWebTest() throws InterruptedException {
-        getDriver().get("http://iana.org"); // open IANA homepage
+    @Test(groups = {"web"}, dataProvider = "searchDataProvider", dataProviderClass = TestDataProvider.class, description = "This test check web search on Google")
+    public void googleWebTest(String requestData) {
+        getDriver().get("https://www.google.com/");
 
-        // Make sure that page has been loaded completely
         new WebDriverWait(getDriver(), 10).until(
-                wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
+            wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
         );
 
-        // Check IANA homepage title
-        assert ((WebDriver) getDriver()).getTitle().equals("Internet Assigned Numbers Authority") : "This is not IANA homepage";
+        WebPageObject webPageObject = (WebPageObject) getPo().getPageObject();
 
-        // Log that test finished
-        System.out.println("Site opening done");
+        webPageObject.searchRequest(requestData);
+
+        for (WebElement x : webPageObject.getSearchList()) {
+            Assert.assertTrue(x.getText().toUpperCase(Locale.ROOT).contains(requestData));
+        }
     }
-
 }
