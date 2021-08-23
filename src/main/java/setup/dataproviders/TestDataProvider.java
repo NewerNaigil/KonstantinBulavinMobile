@@ -1,30 +1,35 @@
 package setup.dataproviders;
 
-import static setup.BaseTest.configReader;
-import static setup.BaseTest.typeOS;
-
+import java.util.Properties;
 import org.testng.annotations.DataProvider;
+import setup.BaseTest;
+import setup.ConfigReader;
 
 public class TestDataProvider {
 
-    private String nativeExpected;
+    private final Properties propertyReader = ConfigReader.loadProperties();
+    private final String email = propertyReader.getProperty("email");
+    private final String userName = propertyReader.getProperty("userName");
+    private final String password = propertyReader.getProperty("password");
+    private final String requestData = propertyReader.getProperty("searchRequest");
 
     @DataProvider
     public Object[][] userDataProvider() {
-        if (typeOS.equals("iOS")) {
+        String nativeExpected;
+        if (BaseTest.getTypeOS().equals("iOS")) {
             nativeExpected = "Budget";
         } else {
             nativeExpected = "BudgetActivity";
         }
         return new Object[][] {
-            {nativeExpected, configReader.getEmail(), configReader.getUserName(), configReader.getPassword()}
+            {nativeExpected, email, userName, password}
         };
     }
 
     @DataProvider
     public Object[][] searchDataProvider() {
         return new Object[][] {
-            {configReader.getRequestData()}
+            {requestData}
         };
     }
 }

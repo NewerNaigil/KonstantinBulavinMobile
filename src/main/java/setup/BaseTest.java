@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterSuite;
@@ -16,11 +17,10 @@ public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver; // singleton
     private static IPageObject po;
-    public static ConfigReader configReader = new ConfigReader();
+    private static Properties propertyReader = ConfigReader.loadProperties();
 
-    private static String token = configReader.getToken().replaceAll("/", "%2f");
-
-    public static String typeOS;
+    private static String token = propertyReader.getProperty("token").replaceAll("/", "%2f");
+    private static String typeOS;
 
     @Override
     public AppiumDriver getDriver() {
@@ -98,5 +98,9 @@ public class BaseTest implements IDriver {
 
     private void setPageObject(String appType, AppiumDriver appiumDriver) throws Exception {
         po = new PageObject(appType, appiumDriver);
+    }
+
+    public static String getTypeOS() {
+        return typeOS;
     }
 }

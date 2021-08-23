@@ -18,7 +18,7 @@ public class NativeBudgetActivityPage extends NativeAbstractPage {
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
     }
 
-    public WebElement getHeaderText() {
+    public WebElement getHeader() {
         return headerText;
     }
 }

@@ -1,6 +1,5 @@
 package scenarios;
 
-import org.testng.asserts.SoftAssert;
 import setup.dataproviders.TestDataProvider;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -25,7 +24,7 @@ public class nativeMobileTests extends BaseTest {
                                            .login(
                                                email,
                                                password)
-                                           .getHeaderText();
+                                           .getHeader();
 
         Assert.assertEquals(header.getText(), expectedTitle);
     }

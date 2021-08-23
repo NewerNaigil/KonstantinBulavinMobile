@@ -66,17 +66,7 @@
     </profile>
 
     <profile>
-      <id>cloudWeb</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <suite.file>./src/test/resources/cloudWebTNG.xml</suite.file>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>cloudAndroidNative</id>
+      <id>cloudAndroidNativeTNG</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
@@ -84,6 +74,38 @@
         <suite.file>./src/test/resources/cloudAndroidNativeTNG.xml</suite.file>
       </properties>
     </profile>
+
+    <profile>
+      <id>cloudAndroidWebTNG</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <suite.file>./src/test/resources/cloudAndroidWebTNG.xml</suite.file>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>cloudIOSNativeTNG</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <suite.file>./src/test/resources/cloudIOSNativeTNG.xml</suite.file>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>cloudIOSWebTNG</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <suite.file>./src/test/resources/cloudIOSWebTNG.xml</suite.file>
+      </properties>
+    </profile>
+
   </profiles>
+
 
 </project>
